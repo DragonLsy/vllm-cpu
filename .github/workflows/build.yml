@@ -1,0 +1,12 @@
+name: Build vllm CPU
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/setup-docker-action@v4.6.0
+      - run: wget https://github.com/vllm-project/vllm/raw/refs/heads/main/docker/Dockerfile.cpu
+      - run: docker build -f Dockerfile.cpu -t vllm-cpu --shm-size=4g . -o type=docker,name=vllm-cpu,dest=/tmp/vllm.tar
