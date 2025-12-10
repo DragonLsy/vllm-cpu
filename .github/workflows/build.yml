@@ -11,7 +11,7 @@ jobs:
       - run: git clone https://github.com/vllm-project/vllm
       - run: |
           cd vllm
-          docker build -f Dockerfile.cpu -t vllm-cpu --shm-size=4g . -o type=docker,name=vllm-cpu,dest=/tmp/vllm.tar
+          docker build -f docker/Dockerfile.cpu -t vllm-cpu --target vllm-openai . -o type=docker,name=vllm-cpu,dest=/tmp/vllm.tar
       #- run: docker save vllm-cpu > /tmp/vllm.tar
       - run: gzip /tmp/vllm.tar
       - uses: actions/upload-artifact@v5.0.0
