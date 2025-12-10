@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: docker/setup-docker-action@v4.6.0
-      - run: wget https://github.com/vllm-project/vllm/raw/refs/heads/main/docker/Dockerfile.cpu
-      - run: docker build -f Dockerfile.cpu -t vllm-cpu --shm-size=4g .
-      - run: docker save vllm-cpu > /tmp/vllm.tar
+      - run: git clone https://github.com/vllm-project/vllm
+      - run: |
+          cd vllm
+          docker build -f Dockerfile.cpu -t vllm-cpu --shm-size=4g . -o type=docker,name=vllm-cpu,dest=/tmp/vllm.tar
+      #- run: docker save vllm-cpu > /tmp/vllm.tar
       - run: gzip /tmp/vllm.tar
       - uses: actions/upload-artifact@v5.0.0
         with:
